@@ -24,7 +24,7 @@ This development repository can be used in a local directory and
 example `cpackget` with:
 
 ```sh
-cpackget add <path>/KeilChris.blinky_Templates.pdsc
+cpackget add <path>/KeilChris.Blinky_Templates.pdsc
 ```
 
 ## Generate software pack
