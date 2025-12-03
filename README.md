@@ -24,15 +24,14 @@ This development repository can be used in a local directory and
 example `cpackget` with:
 
 ```sh
-cpackget add <path>/Keil.STM32F4xx_DFP.pdsc
+cpackget add <path>/KeilChris.blinky_Templates.pdsc
 ```
 
 ## Generate software pack
 
-The software pack is generated using bash shell scripts.
-
-- `./gen_pack.sh` based on [Open-CMSIS-Pack/gen-pack](
-https://github.com/Open-CMSIS-Pack/gen-pack)) generates the software pack. Run this script locally with:
+The software pack is generated using bash shell scripts. [`./gen_pack.sh`](./gen_pack.sh) based on
+[Open-CMSIS-Pack/gen-pack]( https://github.com/Open-CMSIS-Pack/gen-pack)) generates the software pack. Run this script
+locally with:
 
 ```sh
 $ ./gen_pack.sh
