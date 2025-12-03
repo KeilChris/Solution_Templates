@@ -1,0 +1,31 @@
+# A project translates into one executable or library.
+project:
+
+  # List components to use for your application.
+  # A software component is a re-usable unit that may be configurable.
+  components:
+    - component: CMSIS:CORE
+    - component: CMSIS:OS Tick:SysTick
+    - component: CMSIS:RTOS2:Keil RTX5&Source
+
+    - component: Device:Startup
+    - component: CMSIS Driver:VIO:Custom
+
+  # List of source groups and files added to a project or a layer.
+  groups:
+    - group: Documentation
+      files:
+        - file: README.md
+    - group: Application
+      files:
+        - file: Blinky.c
+    - group: Board
+      files:
+        - file: main.c
+        - file: vio_XYZ.c
+
+  output:
+    type:
+      - elf
+      - hex
+      - map

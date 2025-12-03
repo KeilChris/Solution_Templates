@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<package schemaVersion="1.7.54" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/v1.7.54/schema/PACK.xsd">
+  <vendor>KeilChris</vendor>
+  <name>Blinky_templates</name>
+  <description overview="Docs/Overview.md">CMSIS-Pack with CMSIS Solution templates</description>
+  <url></url>
+  <repository type="git">https://github.com/KeilChris/Blinky_Templates.git</repository>
+  <supportContact>christopher.seidl@arm.com</supportContact>
+  <license>LICENSE</license>
+  <licenseSets>
+    <licenseSet id="all" default="true" gating="true">
+      <license name="LICENSE" title="Apache 2.0 License"/>
+    </licenseSet>
+  </licenseSets>
+  
+  <releases>
+    <release version="0.0.7-dev0" date="2025-12-03">
+      Initial Version
+    </release>
+  </releases>
+
+  <keywords>
+    <!-- keywords for indexing -->
+    <keyword>Blinky</keyword>
+    <keyword>Template solution</keyword>
+  </keywords>
+
+  <csolution>
+    <template name="Blinky Button and LED" file="Blinky.csolution.yml" path="Templates/Blinky_ButtonLED">
+      <description>This is a basic blinky example for development boards with an LED and a user button.</description>
+    </template>
+    <template name="Blinky Two LEDs" file="Blinky.csolution.yml" path="Templates/Blinky_TwoLEDs">
+      <description>This is a basic blinky example for development boards with an LED and a user button.</description>
+    </template>
+  </csolution>
+
+</package>
