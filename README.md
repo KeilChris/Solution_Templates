@@ -8,13 +8,13 @@ This repository contains three CMSIS solution templates that can be used to setu
 ## Repository top-level structure
 
 ```txt
-    📦
-    ┣ 📂 .github/workflows   GitHub Actions for creating the software pack.
-    ┣ 📂 Templates           Generic project templates to start new csolution projects.
-      ┣ 📂 Blank             Empty solution with a bare minimum main.f file.
-      ┣ 📂 Blinky_ButtonLED  Blinky application for boards with a button and an LED.
-      ┗ 📂 blinky_TwoLEDs    Blinky application for boards with two LEDs.
-    ┗ 📂 Docs                Overview.md file for the software pack.
+ 📦
+ ┣ 📂 .github/workflows   GitHub Actions for creating the software pack.
+ ┣ 📂 Templates           Generic project templates to start new csolution projects.
+   ┣ 📂 Blank             Empty solution with a bare minimum main.f file.
+   ┣ 📂 Blinky_ButtonLED  Blinky application for boards with a button and an LED.
+   ┗ 📂 blinky_TwoLEDs    Blinky application for boards with two LEDs.
+ ┗ 📂 Docs                Overview.md file for the software pack.
 ```
 
 ## Usage
