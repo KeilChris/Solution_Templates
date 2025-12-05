@@ -24,19 +24,19 @@
 #include "cmsis_os2.h"
 #include "cmsis_vio.h"
 
-static osThreadId_t tid_thrLED;         // Thread id of thread: LED
-static osThreadId_t tid_thrButton;      // Thread id of thread: Button
+static osThreadId_t tid_thrLED;                 // Thread id of thread: LED
+static osThreadId_t tid_thrButton;              // Thread id of thread: Button
 
-volatile     uint32_t g_ledSet = 0;     // Variable to store virtual LED value:
-                                        // 0 = LED0 off, slow blinking
-                                        // 1 = LED0 on,  slow blinking
-                                        // 2 = LED0 off, fast blinking
-                                        // 3 = LED0 on,  fast blinking
+volatile     uint32_t g_ledSet = 0;             // Variable to store virtual LED value:
+                                                // 0 = LED0 off, slow blinking
+                                                // 1 = LED0 on,  slow blinking
+                                                // 2 = LED0 off, fast blinking
+                                                // 3 = LED0 on,  fast blinking
 
-// Create thread attribute to show thread name in the XRTOS viewer:
-const osThreadAttr_t app_main_attr  = {.name = "MainThread"};
-const osThreadAttr_t thrLED_attr    = {.name = "LEDThread"};
-const osThreadAttr_t thrButton_attr = {.name = "ButtonThread"};
+// Create thread attributes to show thread name in the XRTOS viewer:
+static const osThreadAttr_t app_main_attr  = {.name = "MainThread"};
+static const osThreadAttr_t thrLED_attr    = {.name = "LEDThread"};
+static const osThreadAttr_t thrButton_attr = {.name = "ButtonThread"};
 
 /*-----------------------------------------------------------------------------
   thrLED: blink LED
@@ -52,20 +52,20 @@ static __NO_RETURN void thrLED (void *argument) {
     }
 
     if (active_flag == 1U) {
-      vioSetSignal(vioLED0, vioLEDon);         // Switch LED0 on
-      g_ledSet = 3U;                           // LED0 on, fast blinking
-      osDelay(100U);                           // Delay 100 ms
-      vioSetSignal(vioLED0, vioLEDoff);        // Switch LED0 off
-      g_ledSet = 2U;                           // LED0 off, fast blinking
-      osDelay(100U);                           // Delay 100 ms
+      vioSetSignal(vioLED0, vioLEDon);          // Switch LED0 on
+      g_ledSet = 3U;                            // LED0 on, fast blinking
+      osDelay(100U);                            // Delay 100 ms
+      vioSetSignal(vioLED0, vioLEDoff);         // Switch LED0 off
+      g_ledSet = 2U;                            // LED0 off, fast blinking
+      osDelay(100U);                            // Delay 100 ms
     }
     else {
-      vioSetSignal(vioLED0, vioLEDon);         // Switch LED0 off
-      g_ledSet = 1U;                           // LED0 on, slow blinking
-      osDelay(500U);                           // Delay 500 ms
-      vioSetSignal(vioLED0, vioLEDoff);        // Switch LED0 off
-      g_ledSet = 0U;                           // LED0 off, slow blinking
-      osDelay(500U);                           // Delay 500 ms
+      vioSetSignal(vioLED0, vioLEDon);          // Switch LED0 off
+      g_ledSet = 1U;                            // LED0 on, slow blinking
+      osDelay(500U);                            // Delay 500 ms
+      vioSetSignal(vioLED0, vioLEDoff);         // Switch LED0 off
+      g_ledSet = 0U;                            // LED0 off, slow blinking
+      osDelay(500U);                            // Delay 500 ms
     }
   }
 }
@@ -80,10 +80,10 @@ static __NO_RETURN void thrButton (void *argument) {
   (void)argument;
 
   for (;;) {
-    state = (vioGetSignal(vioBUTTON0));           // Get pressed Button state
+    state = (vioGetSignal(vioBUTTON0));         // Get pressed Button state
     if (state != last) {
       if (state == 1U) {
-        osThreadFlagsSet(tid_thrLED, 1U);         // Set flag to thrLED
+        osThreadFlagsSet(tid_thrLED, 1U);       // Set flag to thrLED
       }
       last = state;
     }
@@ -96,11 +96,14 @@ static __NO_RETURN void thrButton (void *argument) {
   Application main thread
  *----------------------------------------------------------------------------*/
 __NO_RETURN void app_main_thread (void *argument) {
+  (void)argument;
 
-  tid_thrLED = osThreadNew(thrLED, NULL, &thrLED_attr);            // Create LED thread
-  tid_thrButton = osThreadNew(thrButton, NULL, &thrButton_attr);   // Create Button thread
+  /* Create LED and Button threads */
+  tid_thrLED    = osThreadNew(thread_LED, NULL, &thread_attr_LED);
+  tid_thrButton = osThreadNew(thread_Button, NULL, &thread_attr_Button);
 
-  for (;;) {                            // Loop forever
+  for (;;) {
+    osDelay(osWaitForever);                     // Delay indefinitely
   }
 }
 
@@ -108,8 +111,8 @@ __NO_RETURN void app_main_thread (void *argument) {
   Application initialization
  *----------------------------------------------------------------------------*/
 int app_main (void) {
-  osKernelInitialize();                         /* Initialize CMSIS-RTOS2 */
+  osKernelInitialize();                         // Initialize CMSIS-RTOS2
   osThreadNew(app_main_thread, NULL, &app_main_attr);
-  osKernelStart();                              /* Start thread execution */
-  return 0;                                    /* Should never reach here */
+  osKernelStart();                              // Start thread execution
+  return 0;                                     // Should never reach here
 }

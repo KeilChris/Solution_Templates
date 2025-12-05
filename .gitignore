@@ -57,3 +57,4 @@ dkms.conf
 # output and build folders
 output/
 build/
+**/vcpkg-configuration.json

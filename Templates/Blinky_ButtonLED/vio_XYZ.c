@@ -95,5 +95,3 @@ int32_t vioGetValue (uint32_t id) {
 
   return value;
 }
-
-// Add other VIO API functions as needed (e.g., vioPrint, vioGetIPv4, etc.)

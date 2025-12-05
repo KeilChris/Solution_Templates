@@ -24,18 +24,18 @@
 #include "cmsis_os2.h"
 #include "cmsis_vio.h"
 
-static osThreadId_t tid_thrLED;         // Thread id of thread: LED
-static osThreadId_t tid_thrButton;      // Thread id of thread: Button
+static osThreadId_t tid_thrLED;                 // Thread id of thread: LED
+static osThreadId_t tid_thrButton;              // Thread id of thread: Button
 
-volatile     uint32_t g_ledSet = 0;     // Variable to store virtual LED value:
-                                        // 0 = LED0 on,  LED1 off
-                                        // 1 = LED0 on,  LED1 on
-                                        // 2 = LED0 off, LED1 on
-                                        // 3 = LED0 off, LED1 off
+volatile     uint32_t g_ledSet = 0;             // Variable to store virtual LED value:
+                                                // 0 = LED0 on,  LED1 off
+                                                // 1 = LED0 on,  LED1 on
+                                                // 2 = LED0 off, LED1 on
+                                                // 3 = LED0 off, LED1 off
 
 // Create thread attribute to show thread name in the XRTOS viewer:
-const osThreadAttr_t app_main_attr  = {.name = "MainThread"};
-const osThreadAttr_t thrLED_attr    = {.name = "LEDThread"};
+static const osThreadAttr_t app_main_attr  = {.name = "MainThread"};
+static const osThreadAttr_t thrLED_attr    = {.name = "LEDThread"};
 
 /*-----------------------------------------------------------------------------
   thrLED: blink LED
@@ -46,18 +46,18 @@ static __NO_RETURN void thrLED (void *argument) {
   (void)argument;
 
   for (;;) {
-      vioSetSignal(vioLED0, vioLEDon);         // Switch LED0 on
-      g_ledSet = 0U;                           // LED0 on, LED1 off
-      osDelay(500U);                           // Delay 500 ms
-      vioSetSignal(vioLED1, vioLEDon);         // Switch LED1 on
-      g_ledSet = 1U;                           // LED0 on, LED1 on
-      osDelay(500U);                           // Delay 500 ms
-      vioSetSignal(vioLED0, vioLEDoff);        // Switch LED0 off
-      g_ledSet = 2U;                           // LED0 off, LED1 on
-      osDelay(500U);                           // Delay 500 ms
-      vioSetSignal(vioLED1, vioLEDoff);        // Switch LED1 off
-      g_ledSet = 3U;                           // LED0 off, LED1 off
-      osDelay(500U);                           // Delay 500 ms
+      vioSetSignal(vioLED0, vioLEDon);          // Switch LED0 on
+      g_ledSet = 0U;                            // LED0 on, LED1 off
+      osDelay(500U);                            // Delay 500 ms
+      vioSetSignal(vioLED1, vioLEDon);          // Switch LED1 on
+      g_ledSet = 1U;                            // LED0 on, LED1 on
+      osDelay(500U);                            // Delay 500 ms
+      vioSetSignal(vioLED0, vioLEDoff);         // Switch LED0 off
+      g_ledSet = 2U;                            // LED0 off, LED1 on
+      osDelay(500U);                            // Delay 500 ms
+      vioSetSignal(vioLED1, vioLEDoff);         // Switch LED1 off
+      g_ledSet = 3U;                            // LED0 off, LED1 off
+      osDelay(500U);                            // Delay 500 ms
   }
 }
 
@@ -65,10 +65,13 @@ static __NO_RETURN void thrLED (void *argument) {
   Application main thread
  *----------------------------------------------------------------------------*/
 __NO_RETURN void app_main_thread (void *argument) {
+  (void)argument;
 
-  tid_thrLED = osThreadNew(thrLED, NULL, &thrLED_attr);            // Create LED thread
+  // Create LED and Button threads
+  tid_thrLED    = osThreadNew(thread_LED, NULL, &thread_attr_LED);
 
-  for (;;) {                            // Loop forever
+  for (;;) {
+    osDelay(osWaitForever);                     // Delay indefinitely
   }
 }
 
@@ -76,8 +79,8 @@ __NO_RETURN void app_main_thread (void *argument) {
   Application initialization
  *----------------------------------------------------------------------------*/
 int app_main (void) {
-  osKernelInitialize();                         /* Initialize CMSIS-RTOS2 */
+  osKernelInitialize();                         // Initialize CMSIS-RTOS2
   osThreadNew(app_main_thread, NULL, &app_main_attr);
-  osKernelStart();                              /* Start thread execution */
-  return 0;                                    /* Should never reach here */
+  osKernelStart();                              // Start thread execution
+  return 0;                                     // Should never reach here
 }

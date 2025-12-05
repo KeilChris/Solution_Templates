@@ -26,7 +26,7 @@
 /*-----------------------------------------------------------------------------
   main: Main function
   Initializes the system and starts the application.
-  This function configures the system clock, initializes the PORT for LED and
+  This function configures the system clock, initializes the GPIOs for LED and
   user button, and starts the application main thread. It enters an infinite
   loop to keep the application running.
  *----------------------------------------------------------------------------*/

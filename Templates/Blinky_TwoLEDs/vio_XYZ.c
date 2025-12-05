@@ -59,5 +59,3 @@ void vioSetSignal (uint32_t mask, uint32_t signal) {
   vioSignalOut |=  mask & signal;
 
 }
-
-// Add other VIO API functions as needed (e.g., vioPrint, vioGetIPv4, etc.)
