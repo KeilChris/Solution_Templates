@@ -1,9 +1,9 @@
 [![Version](https://img.shields.io/github/v/release/KeilChris/Blinky_Templates)](https://github.com/KeilChris/Blinky_Templates/releases/latest)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-green?label)](https://github.com/KeilChris/Blinky_Templates/blob/main/LICENSE)
 
-# Blinky_Templates
+# Template CMSIS Solutions
 
-This repository contains two CMSIS solution templates that can be used to setup simple Blinky projects.
+This repository contains three CMSIS solution templates that can be used to setup either a blank or two simple Blinky projects.
 
 ## Repository top-level structure
 
@@ -24,7 +24,7 @@ This development repository can be used in a local directory and
 example `cpackget` with:
 
 ```sh
-cpackget add <path>/KeilChris.Blinky_Templates.pdsc
+cpackget add <path>/KeilChris.Solution_Templates.pdsc
 ```
 
 ## Generate software pack
@@ -45,7 +45,7 @@ The repository uses GitHub Actions to generate the pack. The `.github/workflows/
 
 ## Issues
 
-Please feel free to raise an [issue on GitHub](https://github.com/KeilChris/Blinky_Templates/issues)
+Please feel free to raise an [issue on GitHub](https://github.com/KeilChris/Solution_Templates/issues)
 to report misbehavior (i.e. bugs) or start discussions about enhancements. This
 is your best way to interact directly with the maintenance team and the community.
 We encourage you to append implementation suggestions as this helps to decrease the
